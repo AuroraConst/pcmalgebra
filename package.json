@@ -1,0 +1,21 @@
+{
+  "name": "mylive",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.1",
+    "aurora-langium": "0.2.29"
+  },
+  "devDependencies": {
+    "@scala-js/vite-plugin-scalajs": "^1.1.0",
+    "@types/fs-extra": "^11.0.4",
+    "typescript": "^5.9.2",
+    "vite": "^4.1.0"
+  }
+}
