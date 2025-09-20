@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "fs-extra": "^11.3.1",
-    "aurora-langium": "0.2.29"
+    "aurora-langium": "0.2.29",
+    "fs-extra": "^11.3.1"
   },
   "devDependencies": {
     "@scala-js/vite-plugin-scalajs": "^1.1.0",
