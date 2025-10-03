@@ -12,7 +12,6 @@ import scala.scalajs.js
 export org.aurora.utils.{fileutils,fs}
 
 class BaseAsyncTest extends wordspec.AsyncWordSpec with should.Matchers{
-  import org.scalajs.macrotaskexecutor.MacrotaskExecutor.Implicits._
   import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
   override implicit def executionContext: ExecutionContext = queue
 
@@ -21,8 +20,6 @@ class BaseAsyncTest extends wordspec.AsyncWordSpec with should.Matchers{
   private lazy val fullyQualifiedName = this.getClass.getName.replace("Test","").replace(".",fileutils.separator)
   private lazy val testPath = s"$testResourcesPath${fileutils.separator}$fullyQualifiedName"
 
-  
-  
   def testfilepath(index:Int) = 
     val path =  s"$testResourcesPath${fileutils.separator}$fullyQualifiedName-$index.aurora"
     createFileIfNotExists(path)

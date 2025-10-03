@@ -12,6 +12,7 @@ class ParseTest extends BaseAsyncTest:
 
       for {
         result <- parse(0)
+         _     <- Future(info(s"result: $result"))
         b <- Future(true should be (true))
       } yield {
         b
