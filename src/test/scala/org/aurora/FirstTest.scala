@@ -4,6 +4,7 @@ import org.scalatest._
 import wordspec._
 import matchers._
 
+export  org.aurora.utils.fileutils
 
 
 class FirstTest extends AnyWordSpec with should.Matchers{
@@ -12,7 +13,7 @@ class FirstTest extends AnyWordSpec with should.Matchers{
       info(fileutils.cwd)
       info(fileutils.testResourcesPath)
 
-      fileutils.createFileSync(s"${fileutils.testResourcesPath}/test.txt")
+      fileutils.createFileIfNotExists(s"$fileutils.testResourcesPath}/test.txt")
       true should be(true)
     }
   }
