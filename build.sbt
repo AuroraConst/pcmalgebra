@@ -47,5 +47,6 @@ lazy val pcmalgebra = project.in(file("."))
     externalNpm := baseDirectory.value,
 
     // ignore node library because scalablytyped cannot handle this
-    stIgnore += "node"
-  )
+    stIgnore += "node",
+    stIgnore += "typescript"
+  ) 
