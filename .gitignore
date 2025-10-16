@@ -63,3 +63,4 @@ bin/
 project/metals.sbt
 client/package-lock.json
 project/metals.sbt
+sbt-launch.jar
