@@ -2,7 +2,24 @@ package org.aurora.sjsast
 
 import scala.concurrent.Future
 
+import typings.auroraLangium.cliMod.{getEmptyAuroraServices, extractAstNode, getAuroraServices}
+import typings.auroraLangium.cliMod.extractAstNode
+import scala.scalajs.js
+import typings.langium.libMod.LangiumParser
+import typings.langium.libServicesMod.LangiumCoreServices
+import typings.auroraLangium.distTypesSrcLanguageGeneratedAstMod.PCM
+
+
 class ParseTest extends BaseAsyncTest:
+  lazy val emptyServices = getAuroraServices()
+    // getEmptyAuroraServices()
+  def parse1PCM(filename:String) = 
+    for{
+      services <- emptyServices.toFuture
+      astNode <- extractAstNode[PCM](filename,services.asInstanceOf[LangiumCoreServices]).toFuture
+    } yield astNode
+
+  
   
   
 
@@ -64,8 +81,8 @@ class ParseTest extends BaseAsyncTest:
       val path4 = testfilepath(4)
 
       for {
-        module <- Future(parse(3))
-        pcm4   <- parse(4)
+        module <-parse1PCM(path3) 
+        pcm4   <- parse1PCM(path4)
         b   <-    Future(true should be (true))
        } yield {
        b
