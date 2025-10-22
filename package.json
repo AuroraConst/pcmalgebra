@@ -15,7 +15,7 @@
   "devDependencies": {
     "@scala-js/vite-plugin-scalajs": "^1.1.0",
     "@types/fs-extra": "^11.0.4",
-    "typescript": "^5.9.3",
+    "typescript": "^5.9.2",
     "vite": "^4.1.0"
   }
 }

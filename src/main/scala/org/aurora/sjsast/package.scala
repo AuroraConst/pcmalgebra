@@ -6,8 +6,9 @@ export cats.syntax.semigroup._ // for |+|
 export org.aurora.sjsast.ShowAurora.given
 export cats.syntax.show._ 
 
- 
+//TODO considering adding an ?Int field to allow "negatives" 
 trait SjsNode :
+
   val name:String
   def merge(p:SjsNode):SjsNode 
 

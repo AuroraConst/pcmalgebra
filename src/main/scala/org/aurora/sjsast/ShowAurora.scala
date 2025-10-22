@@ -2,6 +2,8 @@ package org.aurora.sjsast
 import cats.Show
 import cats.syntax.show._ 
 
+//TODO FOR CONVERTING PCM ccase classes to string
+//TODO TRY TO REVIEW CATS LAWS AND TESTING
 object ShowAurora:
   val newline = "\n"
 
