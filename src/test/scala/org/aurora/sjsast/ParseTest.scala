@@ -8,6 +8,8 @@ import scala.scalajs.js
 import typings.langium.libMod.LangiumParser
 import typings.langium.libServicesMod.LangiumCoreServices
 import typings.auroraLangium.distTypesSrcLanguageGeneratedAstMod.PCM
+import typings.auroraLangium.distTypesSrcExtensionSrcParserParserMod.parseFromText
+import typings.langium.libLspLspServicesMod.LangiumServices
 
 
 class ParseTest extends BaseAsyncTest:
@@ -15,9 +17,10 @@ class ParseTest extends BaseAsyncTest:
     // getEmptyAuroraServices()
   def parse1PCM(filename:String) = 
     for{
+      modelString <-  Future(???) //turn filename into string contents of file
       services <- emptyServices.toFuture
-      astNode <- extractAstNode[PCM](filename,services.asInstanceOf[LangiumCoreServices]).toFuture
-    } yield astNode
+      pcm <- parseFromText(???,modelString,???).toFuture
+    } yield pcm
 
   
   
@@ -62,9 +65,9 @@ class ParseTest extends BaseAsyncTest:
       for {
         _ <- Future(info(s"$path"))
         pcm <- parse1PCM(path)
-        // module <- Future(pcm.module.get)
+        module <- Future(pcm.module.get)
         // modulename <- Future(module.name)
-        // doc    <- Future(info(s"module info: ${module.$document}"))
+        doc    <- Future(info(s"module info: ${module.$document}"))
         //TODO CAN WE GET URI of resource?
         //https://langium.org/docs/learn/workflow/resolve_cross_references/
         b <- Future(true should be (true))
@@ -77,16 +80,16 @@ class ParseTest extends BaseAsyncTest:
 
 
 
-  //   "parse(4) references module from parse(3) in {"  in {
-  //     val path3 = testfilepath(3)
-  //     val path4 = testfilepath(4)
+    "parse(4) references module from parse(3) in {"  in {
+      val path3 = testfilepath(3)
+      val path4 = testfilepath(4)
 
-  //     for {
-  //       module <-parse1PCM(path3) 
-  //       pcm4   <- parse1PCM(path4)
-  //       b   <-    Future(true should be (true))
-  //      } yield {
-  //      b
-  //     }
-  // }
+      for {
+        module <-parse1PCM(path3) 
+        pcm4   <- parse1PCM(path4)
+        b   <-    Future(true should be (true))
+       } yield {
+       b
+      }
+  }
 } 
