@@ -14,12 +14,11 @@ import typings.langium.libLspLspServicesMod.LangiumServices
 
 class ParseTest extends BaseAsyncTest:
   lazy val emptyServices = getAuroraServices()
-    // getEmptyAuroraServices()
   def parse1PCM(filename:String) = 
     for{
       modelString <-  Future(???) //turn filename into string contents of file
       services <- emptyServices.toFuture
-      pcm <- parseFromText(???,modelString,???).toFuture
+      pcm <- parseFromText(???,modelString,???).toFuture  //TODO FILL IN APPRORRIATE ARGS
     } yield pcm
 
   
