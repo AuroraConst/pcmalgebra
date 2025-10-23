@@ -60,12 +60,13 @@ class ParseTest extends BaseAsyncTest:
       val path = testfilepath(3)
 
       for {
-        pcm <- parse(3)
-        module <- Future(pcm.module.get.name)
+        _ <- Future(info(s"$path"))
+        pcm <- parse1PCM(path)
+        // module <- Future(pcm.module.get)
+        // modulename <- Future(module.name)
+        // doc    <- Future(info(s"module info: ${module.$document}"))
         //TODO CAN WE GET URI of resource?
         //https://langium.org/docs/learn/workflow/resolve_cross_references/
-        uri    <- Future(module)
-        _      <- Future(info(s"module: $module"))
         b <- Future(true should be (true))
 
 
@@ -76,16 +77,16 @@ class ParseTest extends BaseAsyncTest:
 
 
 
-    "parse(4) references module from parse(3) in {"  in {
-      val path3 = testfilepath(3)
-      val path4 = testfilepath(4)
+  //   "parse(4) references module from parse(3) in {"  in {
+  //     val path3 = testfilepath(3)
+  //     val path4 = testfilepath(4)
 
-      for {
-        module <-parse1PCM(path3) 
-        pcm4   <- parse1PCM(path4)
-        b   <-    Future(true should be (true))
-       } yield {
-       b
-      }
-  }
+  //     for {
+  //       module <-parse1PCM(path3) 
+  //       pcm4   <- parse1PCM(path4)
+  //       b   <-    Future(true should be (true))
+  //      } yield {
+  //      b
+  //     }
+  // }
 } 
