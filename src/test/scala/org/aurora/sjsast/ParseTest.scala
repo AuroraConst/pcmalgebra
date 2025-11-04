@@ -56,9 +56,12 @@ class ParseTest extends BaseAsyncTest:
       for {
         langiumPCM <- org.aurora.utils.fileutils.parse(path0).toFuture
         pcm:PCM <- Future( PCM(langiumPCM))
-        b <- Future((pcm.merge(pcm)) should be (pcm))
+        result   <- Future(pcm.merge(pcm))
+        _       <- Future(info(s"result: ${result.show}"))
+        b <- Future(result should be (pcm))
       } yield {
         b
+        
       }
     }
 
