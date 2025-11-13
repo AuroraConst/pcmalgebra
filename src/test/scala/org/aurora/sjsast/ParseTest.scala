@@ -2,8 +2,7 @@ package org.aurora.sjsast
 
 import scala.concurrent.Future
 
-import typings.auroraLangium.cliMod.{getEmptyAuroraServices, extractAstNode, getAuroraServices}
-import typings.auroraLangium.cliMod.extractAstNode
+import typings.auroraLangium.cliMod.{getEmptyAuroraServices, getAuroraServices}
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.Thenable.Implicits.*
@@ -14,6 +13,7 @@ import org.aurora.sjsast.GenAst
 
 class ParseTest extends BaseAsyncTest:
   lazy val emptyServices = getAuroraServices()
+  // Canonical fixture used to assert we can introspect Issues/Orders without cross-doc refs.
   private val simpleFixturePath =
     s"${fileutils.testResourcesPath}${fileutils.separator}fixtures${fileutils.separator}simple-valid.aurora"
   // def parse1PCM(filename:String) =  
@@ -72,6 +72,7 @@ class ParseTest extends BaseAsyncTest:
     }
 
     "parse the simple fixture and expose Issues/Orders" in {
+      // This test walks the parsed AST directly to make sure PCM is correct & verified.
       for {
         parseResult <- fileutils.parse(simpleFixturePath).toFuture
       } yield {
@@ -94,11 +95,29 @@ class ParseTest extends BaseAsyncTest:
         }
         maybeOrders shouldBe defined
 
-        val namedGroups = maybeOrders.get.namedGroups.toOption.map(_.toSeq).getOrElse(Seq.empty)
+        val namedGroups = Option(maybeOrders.get.namedGroups).map(_.toSeq).getOrElse(Seq.empty)
         namedGroups should have length 1
-        namedGroups.head.name shouldBe "GroupOne:"
+        val group = namedGroups.head
+        group.name shouldBe "GroupOne:"
 
-        val orderNames = namedGroups.head.orders.toSeq.map(_.name)
+        // Orders may contain simple coordinates or mutually-exclusive pairs; extract names from both shapes.
+        val orderNames = group.orders.toSeq.flatMap { order =>
+          val dynamicOrder = order.asInstanceOf[js.Dynamic]
+          dynamicOrder
+            .selectDynamic("$type")
+            .asInstanceOf[js.UndefOr[String]]
+            .toOption match
+              case Some("OrderCoordinate") =>
+                Seq(dynamicOrder.selectDynamic("name").asInstanceOf[String])
+              case Some("MutuallyExclusive") =>
+                val order1 = dynamicOrder.selectDynamic("order1").asInstanceOf[js.Dynamic]
+                val order2 = dynamicOrder.selectDynamic("order2").asInstanceOf[js.Dynamic]
+                Seq(
+                  order1.selectDynamic("name").asInstanceOf[String],
+                  order2.selectDynamic("name").asInstanceOf[String]
+                )
+              case _ => Seq.empty
+        }
         orderNames should contain theSameElementsInOrderAs Seq("OrderA")
       }
     }
