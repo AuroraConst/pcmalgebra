@@ -1,5 +1,7 @@
 package org.aurora.sjsast
 
+import scala.annotation.targetName
+
 type CIO = Clinical|Issues|Orders
 
 case class PCM(cio:Map[String,CIO]) extends SjsNode :
@@ -13,7 +15,17 @@ case class PCM(cio:Map[String,CIO]) extends SjsNode :
 
 
 object PCM :      
+  def apply(cio: Map[String, CIO]): PCM =
+    new PCM(cio)
 
+  @targetName("applyFromSjsNode")
+  def apply(map: Map[String, SjsNode]): PCM =
+    val converted = map.collect {
+      case (k, v: Clinical) => k -> v
+      case (k, v: Issues)   => k -> v
+      case (k, v: Orders)   => k -> v
+    }
+    PCM(converted)
     
   private def cioFromModuleOrElse (p:GenAst.PCM):Map[String,CIO] = 
     p.module.map{_.elements}
