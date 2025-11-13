@@ -5,11 +5,17 @@ import scala.concurrent.Future
 import typings.auroraLangium.cliMod.{getEmptyAuroraServices, extractAstNode, getAuroraServices}
 import typings.auroraLangium.cliMod.extractAstNode
 import scala.scalajs.js
+import scala.scalajs.js.JSConverters.*
+import scala.scalajs.js.Thenable.Implicits.*
 import typings.langium.langiumStrings.langium
+
+import org.aurora.sjsast.GenAst
 
 
 class ParseTest extends BaseAsyncTest:
   lazy val emptyServices = getAuroraServices()
+  private val simpleFixturePath =
+    s"${fileutils.testResourcesPath}${fileutils.separator}fixtures${fileutils.separator}simple-valid.aurora"
   // def parse1PCM(filename:String) =  
   
   
@@ -62,6 +68,38 @@ class ParseTest extends BaseAsyncTest:
       } yield {
         b
         
+      }
+    }
+
+    "parse the simple fixture and expose Issues/Orders" in {
+      for {
+        parseResult <- fileutils.parse(simpleFixturePath).toFuture
+      } yield {
+        val pcmAst = parseResult.asInstanceOf[GenAst.PCM]
+
+        pcmAst.module.toOption shouldBe empty
+
+        val elements = pcmAst.elements.toSeq
+
+        val issues = elements.collect {
+          case element if element.$type == "Issues" => element.asInstanceOf[GenAst.Issues]
+        }
+        issues should have length 1
+
+        val issueNames = issues.head.coord.toSeq.map(_.name)
+        issueNames should contain theSameElementsInOrderAs Seq("A", "B")
+
+        val maybeOrders = elements.collectFirst {
+          case element if element.$type == "Orders" => element.asInstanceOf[GenAst.Orders]
+        }
+        maybeOrders shouldBe defined
+
+        val namedGroups = maybeOrders.get.namedGroups.toOption.map(_.toSeq).getOrElse(Seq.empty)
+        namedGroups should have length 1
+        namedGroups.head.name shouldBe "GroupOne:"
+
+        val orderNames = namedGroups.head.orders.toSeq.map(_.name)
+        orderNames should contain theSameElementsInOrderAs Seq("OrderA")
       }
     }
 
