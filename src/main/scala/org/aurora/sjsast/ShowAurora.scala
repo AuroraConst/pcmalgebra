@@ -54,3 +54,11 @@ object ShowAurora:
       val result = quRef.refs.map{(ref:QuReference) => ref.show}.mkString(",")
       s"$result"
   }
+
+  given Show[Module] = Show.show{
+    (m:Module)  => val childrenShow = m.cio.get("Orders").map{ _.asInstanceOf[Orders] }
+        .map{_.show}.getOrElse("")
+        s"$newline$childrenShow"  
+
+
+  }

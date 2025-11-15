@@ -4,7 +4,10 @@ import scala.annotation.targetName
 
 type CIO = Clinical|Issues|Orders
 
-case class PCM(cio:Map[String,CIO]) extends SjsNode :
+
+//TODO note a PCM can be a Module or it can be Map[String,CIO] this begs the question whether
+//the PCM should take one parameter of type Map[String,CIO] | Module
+case class PCM(cio:Map[String,CIO], module:Option[Module]=None) extends SjsNode :
   override val name = "PCM"
 
   def merge(p:PCM):PCM = 
@@ -16,7 +19,10 @@ case class PCM(cio:Map[String,CIO]) extends SjsNode :
 
 object PCM :      
   def apply(cio: Map[String, CIO]): PCM =
-    new PCM(cio)
+    new PCM(cio, None)
+
+  def apply(module: Module): PCM =
+     new PCM(Map[String,CIO](), Some(module))  
 
   @targetName("applyFromSjsNode")
   def apply(map: Map[String, SjsNode]): PCM =
@@ -42,6 +48,5 @@ object PCM :
       }.toMap
 
   def apply(p:GenAst.PCM) :PCM = 
-    val cio = cioFromModuleOrElse(p)
-    PCM(cio)
+    p.module.toOption.fold{PCM(cioFromModuleOrElse(p))}{m => PCM(Module(m))}
 
