@@ -29,7 +29,7 @@ class ArnoldModuleTest extends BaseAsyncTest:
         astPCM      <- parse(0)
         pcm         <- Future(PCM(astPCM))
         assertName  <- Future(pcm.module.map(_.name).getOrElse("") should be("chf_2024"))
-        _           <- finfo(s"${pcm.module.show}")
+        _           <- finfo(s"${pcm.show}")
       } yield {
          assertName
       }

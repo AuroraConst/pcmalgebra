@@ -6,10 +6,15 @@ object ShowAurora:
   val newline = "\n"
 
   given Show[PCM] =  Show.show{
-      (p: PCM) => 
+    (p: PCM) =>
+      //FIXME this is set to only show the Order coordinates
+      def showCIO:String = 
         val childrenShow = p.cio.get("Orders").map{ _.asInstanceOf[Orders] }
-          .map{_.show}.getOrElse("")
-        s"$newline$childrenShow"  
+           .map{_.show}.getOrElse("")
+          s"$newline$childrenShow" 
+      
+      p.module.fold{showCIO }{m => m.show}
+
   }     
 
 
@@ -56,6 +61,7 @@ object ShowAurora:
   }
 
   given Show[Module] = Show.show{
+    //FIXME this is set to only show the Order coordinates
     (m:Module)  => val childrenShow = m.cio.get("Orders").map{ _.asInstanceOf[Orders] }
         .map{_.show}.getOrElse("")
         s"$newline$childrenShow"  
