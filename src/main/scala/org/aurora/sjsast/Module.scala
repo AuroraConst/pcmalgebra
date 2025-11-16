@@ -19,16 +19,6 @@ object Module :
   def apply(m:GenAst.Module): Module =
     new Module(m.name, cioFromModuleElements(m))
 
-  //TODO what is this annotation for?
-  @targetName("applyFromSjsNode")
-  def apply(map: Map[String, SjsNode]): Module =
-    val converted = map.collect {
-      case (k, v: Clinical) => k -> v
-      case (k, v: Issues)   => k -> v
-      case (k, v: Orders)   => k -> v
-    }
-    // PCM(converted)
-    ???
     
   //converts string based type representations from typescript to Scala based types
   private def cioFromModuleElements (m:GenAst.Module):Map[String,CIO] = 
@@ -44,8 +34,4 @@ object Module :
 
       }.toMap
 
-  //TODO ?delete
-  // def apply(p:GenAst.PCM) :PCM = 
-  //   val cio = cioFromModuleOrElse(p)
-  //   PCM(cio)
-
+ 
