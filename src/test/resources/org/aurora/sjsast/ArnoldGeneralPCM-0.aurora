@@ -1,0 +1,12 @@
+
+Issues:
+b : y
+a : x
+
+
+Clinical:
+hpi: --hello world;
+Orders:
+Investigations:
+o1(a)
+o2(b)

@@ -16,9 +16,9 @@ object ShowAurora:
         .getOrElse("")
 
     val sections = List(
+      showCioElement[Clinical]("Clinical"),
       showCioElement[Issues]("Issues"),
-      showCioElement[Orders]("Orders"),
-      showCioElement[Clinical]("Clinical")
+      showCioElement[Orders]("Orders")
     ).filter(_.nonEmpty)
 
     val cioShow = sections.mkString(newline)
@@ -114,8 +114,8 @@ object ShowAurora:
     val sections = List(
       showCioElement[Issues]("Issues"),
       showCioElement[Orders]("Orders"),
-      showCioElement[Clinical]("Clinical")
-    ).filter(_.nonEmpty)
+      // showCioElement[Clinical]("Clinical")
+    ).filter(_.nonEmpty) 
 
     sections.mkString(newline)
   }
