@@ -5,17 +5,39 @@ import cats.syntax.show._
 object ShowAurora:
   val newline = "\n"
 
-  given Show[PCM] =  Show.show{
-    (p: PCM) =>
-      //FIXME this is set to only show the Order coordinates
-      def showCIO:String = 
-        val childrenShow = p.cio.get("Orders").map{ _.asInstanceOf[Orders] }
-           .map{_.show}.getOrElse("")
-          s"$newline$childrenShow" 
-      
-      p.module.fold{showCIO }{m => m.show}
+  given Show[PCM] = Show.show { (p: PCM) =>
 
-  }     
+    // Helper: safely get CIO element, cast, and show it
+    def showCioElement[A <: CIO](key: String)(using Show[A]): String =
+      p.cio
+        .get(key)
+        .map(_.asInstanceOf[A])
+        .map(_.show)
+        .getOrElse("")
+
+    val sections = List(
+      showCioElement[Issues]("Issues"),
+      showCioElement[Orders]("Orders"),
+      showCioElement[Clinical]("Clinical")
+    ).filter(_.nonEmpty)
+
+    val cioShow = sections.mkString(newline)
+
+    // If module exists, prefer module.show, else show CIO
+    p.module.fold(cioShow)(_.show)
+  }
+
+  given Show[Clinical] = Show.show { c =>
+    val groups  = c.ngc.map(_.show).mkString(newline)
+    val narr    = c.narrative.map(_.name).mkString(" ")
+
+    List(
+      s"${c.name}:",
+      narr,
+      groups
+    ).filter(_.nonEmpty)
+    .mkString(newline)
+  }
 
 
   given Show[Issues] =  Show.show{
@@ -47,6 +69,26 @@ object ShowAurora:
         s"$name$newline$result"
     }
 
+  given Show[NGC] = Show.show { ngc =>
+    val coordsShow = ngc.ccoords.map(_.show).mkString(newline)
+    val narratives = ngc.narrative.map(_.name).mkString(" ")
+
+    List(
+      ngc.name,
+      narratives,
+      coordsShow
+    ).filter(_.nonEmpty).mkString(newline)
+  }
+
+  given Show[ClinicalCoordinateValue] = Show.show{
+      (ccv: ClinicalCoordinateValue) => 
+        val refs = ccv.refs.map{(rc:RefCoordinate) => rc.name}.mkString(",")
+        val narratives = ccv.narrative.map{(nl:NL_STATEMENT) => nl.name}.mkString(" ")
+        val qus = ccv.qu.map{(qu:QU) => qu}.mkString(",")
+        val name = ccv.name
+        s"$name [refs: $refs] [narrative: $narratives] [qu: $qus]"
+    }
+
   given Show[QuReference]  = Show.show{
     (ref:QuReference) =>
       val qu = ref.qu
@@ -60,11 +102,20 @@ object ShowAurora:
       s"$result"
   }
 
-  given Show[Module] = Show.show{
-    //FIXME this is set to only show the Order coordinates
-    (m:Module)  => val childrenShow = m.cio.get("Orders").map{ _.asInstanceOf[Orders] }
-        .map{_.show}.getOrElse("")
-        s"$newline$childrenShow"  
+  given Show[Module] = Show.show { (m: Module) =>
 
+    def showCioElement[A <: CIO](key: String)(using Show[A]): String =
+      m.cio
+        .get(key)
+        .map(_.asInstanceOf[A])
+        .map(_.show)
+        .getOrElse("")
 
+    val sections = List(
+      showCioElement[Issues]("Issues"),
+      showCioElement[Orders]("Orders"),
+      showCioElement[Clinical]("Clinical")
+    ).filter(_.nonEmpty)
+
+    sections.mkString(newline)
   }
