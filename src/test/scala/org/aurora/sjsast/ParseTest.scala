@@ -1,15 +1,8 @@
 package org.aurora.sjsast
 
-import scala.concurrent.Future
-
-import typings.auroraLangium.cliMod.{getEmptyAuroraServices, extractAstNode, getAuroraServices}
-import typings.auroraLangium.cliMod.extractAstNode
-import scala.scalajs.js
-import typings.langium.langiumStrings.langium
 
 
 class ParseTest extends BaseAsyncTest:
-  lazy val emptyServices = getAuroraServices()
   // def parse1PCM(filename:String) =  
   
   
@@ -48,10 +41,6 @@ class ParseTest extends BaseAsyncTest:
 
     "pcm+pcm" in {
       val path0 = testfilepath(0)
-      import catsgivens.given
-      import cats.syntax.semigroup._ // for |+|
-      import org.aurora.sjsast.ShowAurora.given
-      import cats.syntax.show._ 
 
       for {
         langiumPCM <- org.aurora.utils.fileutils.parse(path0).toFuture

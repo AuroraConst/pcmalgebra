@@ -1,7 +1,5 @@
 package org.aurora.sjsast
 
-import scala.concurrent.Future
-
 
 class DerivedTest extends BaseAsyncTest :
 

@@ -9,7 +9,7 @@ class ModulePCMTest extends BaseAsyncTest:
       //TODO note if there is no file named ArnoldModule-0.aurora, it will automatically create one
       //SHOULD TEST FILE NAMING BE MORE DESCRIPTIVE e.g. ArnoldModule-Valid.auror
       
-      //TODO add a test that verifies a non-module using Either[L,R] instead of exception handling
+      //TODO add a test that verifies a non-module after changing the apply function return type to  Either[L,R] instead of exception handling
 
       for {
         astPCM      <- parse(0)
