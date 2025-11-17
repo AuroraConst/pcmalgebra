@@ -13,9 +13,11 @@ case class ModulePCM(module: Module) extends SjsNode:
   override def merge(p: SjsNode): SjsNode =
     throw new UnsupportedOperationException("Merging ModulePCM instances is not supported.")
 
-object ModulePCM:
-  def apply(p: GenAst.PCM): ModulePCM =
+
+object ModulePCM: 
+  def apply(p: GenAst.PCM): ModulePCM =   //TODO: what about Either[ErrorString,ModulePCM]
     val moduleAst = p.module.toOption.getOrElse {
       throw new IllegalArgumentException("PCM does not contain a module declaration.")
     }
+
     ModulePCM(Module(moduleAst))

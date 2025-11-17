@@ -12,6 +12,12 @@ import scala.scalajs.js
 export org.aurora.utils.{fileutils,fs}
 
 class BaseAsyncTest extends wordspec.AsyncWordSpec with should.Matchers{
+  export scala.concurrent.Future
+  export cats.Show
+  export cats.syntax.show._ 
+  export ShowAurora.given
+  export scala.scalajs.js.JSConverters._ 
+
   import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
   override implicit def executionContext: ExecutionContext = queue
 
@@ -19,6 +25,12 @@ class BaseAsyncTest extends wordspec.AsyncWordSpec with should.Matchers{
   private lazy val basefilename = this.getClass.getSimpleName.replace("Test","")
   private lazy val fullyQualifiedName = this.getClass.getName.replace("Test","").replace(".",fileutils.separator)
   private lazy val testPath = s"$testResourcesPath${fileutils.separator}$fullyQualifiedName"
+
+
+
+
+  //info() wrapped in a future
+  protected def finfo(output:String) =  Future(info(s"$output"))
 
   def testfilepath(index:Int) = 
     val path =  s"$testResourcesPath${fileutils.separator}$fullyQualifiedName-$index.aurora"
