@@ -7,16 +7,14 @@ object ShowAurora:
 
   given Show[PCM] =  Show.show{
     (p: PCM) =>
-      //FIXME this is set to only show the Order coordinates
-      def showCIO:String = 
-        val childrenShow = p.cio.get("Orders").map{ _.asInstanceOf[Orders] }
-           .map{_.show}.getOrElse("")
-          s"$newline$childrenShow" 
-      
-      p.module.fold{showCIO }{m => m.show}
-
+      val childrenShow = p.cio.get("Orders").map{ _.asInstanceOf[Orders] }
+         .map{_.show}.getOrElse("")
+      s"$newline$childrenShow"
   }     
 
+  given Show[ModulePCM] = Show.show { mpcm =>
+    mpcm.module.show
+  }
 
   given Show[Issues] =  Show.show{
       (i: Issues) => 

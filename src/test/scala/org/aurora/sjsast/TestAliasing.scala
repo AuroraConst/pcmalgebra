@@ -31,8 +31,8 @@ object TestAliasing:
       testLangium <- fileutils.parse(testFilePath).toFuture
     } yield {
       val modules = Map(
-        "chf_drkim" -> PCM(chfLangium),
-        "MI_DrKim_2024" -> PCM(miLangium)
+        "chf_drkim" -> ModulePCM(chfLangium).toPCM,
+        "MI_DrKim_2024" -> ModulePCM(miLangium).toPCM
       )
       val testPCM = PCM(testLangium)
 

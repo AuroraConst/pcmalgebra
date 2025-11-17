@@ -28,7 +28,10 @@ object ModuleMergeExample:
         moduleFiles.map { case (name, path) =>
           org.aurora.utils.fileutils.parse(path)
             .toFuture
-            .map(langiumPCM => name -> PCM(langiumPCM))
+            .map { langiumPCM =>
+              val modulePCM = ModulePCM(langiumPCM)
+              name -> modulePCM.toPCM
+            }
         }
       ).map(_.toMap)
       
