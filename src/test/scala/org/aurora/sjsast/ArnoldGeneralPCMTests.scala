@@ -25,7 +25,7 @@ class ArnoldGeneralPCMTest extends BaseAsyncTest:
         pcm1     <- Future(PCM(tspcm1))
         _           <- pcm0 should be(pcm1)
         // _           <-  (pcm0 |+| pcm0) should be(pcm0)
-        _           <- (pcm0.module should be (None))
+        _           <- pcm0.module should be (None)
         a           <- (true should be(true))
         _           <- finfo(s"${pcm0.show}")
       } yield {
