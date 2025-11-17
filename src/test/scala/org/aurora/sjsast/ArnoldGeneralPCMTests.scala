@@ -14,7 +14,7 @@ class ArnoldGeneralPCMTest extends BaseAsyncTest:
 
 
   "ArnoldGeneralPCM-0" should {
-    "be a module" in { 
+    "be not be a module" in { 
       //TODO note if there is no file named ArnoldGeneralPCM-0.aurora, it will automatically create one
       //SHOULD TEST FILE NAMING BE MORE DESCRIPTIVE e.g. ArnoldModule-Valid.aurora
 
