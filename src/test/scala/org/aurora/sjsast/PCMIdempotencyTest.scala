@@ -1,10 +1,11 @@
 package org.aurora.sjsast
-class ArnoldGeneralPCMTest extends BaseAsyncTest:
 
-  "ArnoldGeneralPCM-0" should {
-    "be not be a module" in { 
-      //TODO note if there is no file named ArnoldGeneralPCM-0.aurora, it will automatically create one
-      //SHOULD TEST FILE NAMING BE MORE DESCRIPTIVE e.g. ArnoldModule-Valid.aurora
+
+class PCMIdempotencyTest extends BaseAsyncTest:
+
+  "PCMIdempotencyTest" should {
+    "be a module" in { 
+
 
       for {
         tspcm0      <- parse(0)
@@ -18,6 +19,5 @@ class ArnoldGeneralPCMTest extends BaseAsyncTest:
         _           <- finfo(s"${pcm0.show}")
       } yield {
          a
-      }
-    } 
+      }    } 
   }

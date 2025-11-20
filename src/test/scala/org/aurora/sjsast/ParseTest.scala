@@ -1,15 +1,15 @@
 package org.aurora.sjsast
 
-import scala.concurrent.Future
+// import scala.concurrent.Future
 
-import typings.auroraLangium.cliMod.{getEmptyAuroraServices, extractAstNode, getAuroraServices}
-import typings.auroraLangium.cliMod.extractAstNode
-import scala.scalajs.js
-import typings.langium.langiumStrings.langium
+// import typings.auroraLangium.cliMod.{getEmptyAuroraServices, extractAstNode, getAuroraServices}
+// import typings.auroraLangium.cliMod.extractAstNode
+// import scala.scalajs.js
+// import typings.langium.langiumStrings.langium
 
 
 class ParseTest extends BaseAsyncTest:
-  lazy val emptyServices = getAuroraServices()
+  // lazy val emptyServices = getAuroraServices()
   // def parse1PCM(filename:String) =  
   
   
