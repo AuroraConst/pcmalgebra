@@ -53,6 +53,15 @@ object catsgivens :
   }
 
 
+  given pcmBoundedSemiLattice: BoundedSemilattice[PCM] =  new BoundedSemilattice[PCM] {
+    def empty: PCM = PCM(Map.empty)
+    def combine (x: PCM, y:PCM) :  PCM =
+      if(x == empty) y
+       else if (y==empty) x
+       else x.merge(y)
+  }
+
+
 
 
 
