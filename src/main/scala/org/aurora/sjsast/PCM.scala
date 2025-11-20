@@ -7,22 +7,25 @@ type CIO = Clinical|Issues|Orders
 
 //TODO note a PCM can be a Module or it can be Map[String,CIO] this begs the question whether
 //the PCM should take one parameter of type Map[String,CIO] | Module
-case class PCM(cio:Map[String,CIO], module:Option[Module]=None) extends SjsNode :
+case class PCM(content: Either[Module, Map[String, CIO]]) extends SjsNode :
   override val name = "PCM"
 
-  def merge(p:PCM):PCM = 
-    PCM( cio |+| p.cio) 
+  def module: Option[Module] = content.left.toOption
 
+  def cio: Map[String, CIO] = content.fold(_.cio, identity)
+
+  def merge(p:PCM):PCM =
+    PCM(cio |+| p.cio)
 
   override def merge(p: SjsNode): SjsNode = merge(p.asInstanceOf[PCM])
 
 
 object PCM :      
   def apply(cio: Map[String, CIO]): PCM =
-    new PCM(cio, None)
+    new PCM(Right(cio))
 
   def apply(module: Module): PCM =
-     new PCM(Map[String,CIO](), Some(module))  
+     new PCM(Left(module))
 
   @targetName("applyFromSjsNode")
   def apply(map: Map[String, SjsNode]): PCM =
@@ -50,3 +53,31 @@ object PCM :
   def apply(p:GenAst.PCM) :PCM = 
     p.module.toOption.fold{PCM(cioFromModuleOrElse(p))}{m => PCM(Module(m))}
 
+
+  def f = ???
+  /**
+    * 
+    * Clinical:
+      physicalExam:
+      bp = ??;
+    * Issues:
+      a
+
+      Orders:
+      Investigations:
+      oa
+      x
+
+
+    */
+
+  /**
+    * Orders:
+      Investigations:
+      cbc
+    */
+
+  /**
+    * pcm |+| parse("Clinical:physicalExam:bp = ??;")
+    * 
+    */   
