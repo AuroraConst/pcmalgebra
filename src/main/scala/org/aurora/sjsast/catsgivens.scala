@@ -46,11 +46,11 @@ object catsgivens :
               case (None,None)    =>    ???//k -> SjsAst.InvalidSjsNode().merge[T](SjsAst.InvalidSjsNode())
             }
           }.toMap    
-
-          
           result
       }
   }
+
+  
 
 
   given BoundedSemilattice[PCM] =  new BoundedSemilattice[PCM] {
@@ -62,6 +62,13 @@ object catsgivens :
   }
 
 
+  given BoundedSemilattice[Issues] =  new BoundedSemilattice[Issues] {
+    def empty: Issues = Issues(Set.empty,Set.empty)
+    def combine (x: Issues, y:Issues) :  Issues =
+      if(x == empty) y
+       else if (y==empty) x
+       else Issues( x.ics |+| y.ics, x.narrative |+| y.narrative) 
+  }
 
 
 

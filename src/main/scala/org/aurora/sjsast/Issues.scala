@@ -1,15 +1,15 @@
 package org.aurora.sjsast
 
-case class Issues(ics: Set[IssueCoordinate], narrative:Set[NL_STATEMENT]=Set.empty) extends SjsNode:
-  override val name = "Issues"
+case class Issues(ics: Set[IssueCoordinate], narrative:Set[NL_STATEMENT]=Set.empty) //extends SjsNode:
+  // val name = "Issues"
 
-  def merge(i: Issues): Issues =
-    val narratives = narrative |+| i.narrative
-    val x = ics.merge( i.ics)
-    Issues(x, narratives)
+  // def merge(i: Issues): Issues =
+  //   val narratives = narrative |+| i.narrative
+  //   val x = ics.merge( i.ics)
+  //   Issues(x, narratives)
 
-  override def merge(i: SjsNode): SjsNode =
-    merge(i.asInstanceOf[Issues])
+  // override def merge(i: SjsNode): SjsNode =
+  //   merge(i.asInstanceOf[Issues])
 
 object Issues:
   def apply(i: GenAst.Issues): Issues =
