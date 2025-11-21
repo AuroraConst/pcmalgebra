@@ -12,6 +12,9 @@ import scala.scalajs.js
 export org.aurora.utils.{fileutils,fs}
 
 class BaseAsyncTest extends wordspec.AsyncWordSpec with should.Matchers{
+  export catsgivens.given
+  export cats.syntax.semigroup._ // for |+|
+
   export scala.concurrent.Future
   export cats.Show
   export cats.syntax.show._ 

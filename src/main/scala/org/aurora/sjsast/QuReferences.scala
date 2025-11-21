@@ -15,9 +15,17 @@ case class QuReferences (refs: Set[QuReference]=Set.empty) extends SjsNode :
 
 object QuReferences:
   def apply[T](optQuRefs:Option[GenAst.QuReferences]): QuReferences = 
-    val s:Set[QuReference] = optQuRefs.map{x => x.quRefs.toList}
-      .getOrElse(Nil).map{(x:GenAst.QuReference) => QuReference(x)}.toSet
+    val s:Set[QuReference] = optQuRefs
+      .map{genQuRefs => genQuRefs.quRefs.toList}
+      .getOrElse(Nil)
+      .map{ref => QuReference(ref)}.toSet
+
+    println(s"QuReferences applied with size:${s.size} refs:${s}")  
     QuReferences(s)
+
+
+
+
 
 
       
