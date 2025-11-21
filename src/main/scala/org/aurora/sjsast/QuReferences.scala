@@ -20,7 +20,6 @@ object QuReferences:
       .getOrElse(Nil)
       .map{ref => QuReference(ref)}.toSet
 
-    println(s"QuReferences applied with size:${s.size} refs:${s}")  
     QuReferences(s)
 
 
