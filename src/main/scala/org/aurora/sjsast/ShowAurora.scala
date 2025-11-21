@@ -4,7 +4,7 @@ import cats.syntax.show._
 
 object ShowAurora:
   val newline = "\n"
-
+ 
   given Show[PCM] =  Show.show{
       (p: PCM) => 
         val childrenShow = p.cio.get("Orders").map{ _.asInstanceOf[Orders] }

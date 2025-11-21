@@ -18,11 +18,12 @@ class ParseTest extends BaseAsyncTest:
     "parse file correctly" in { 
       //TODO note if there is no file named Parse-0.aurora, it will automatically create one
       //SHOULD TEST FILE NAMING BE MORE DESCRIPTIVE e.g. Parse-Valid.aurora
-      val path = testfilepath(0)
 
       for {
-        result <- parse(0)
-         _     <- Future(info(s"result: $result"))
+        pcm0 <- parse(0)
+        pcm1 <- parse(1)
+         _     <- Future(info(s"pcm0: $pcm0"))
+         _     <- Future(info(s"pcm1: $pcm1"))
         b <- Future(true should be (true))
       } yield {
         b

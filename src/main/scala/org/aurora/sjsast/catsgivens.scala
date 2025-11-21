@@ -58,7 +58,7 @@ object catsgivens :
     def combine (x: PCM, y:PCM) :  PCM =
       if(x == empty) y
        else if (y==empty) x
-       else x.merge(y)
+       else PCM( x.cio |+| y.cio) 
   }
 
 
