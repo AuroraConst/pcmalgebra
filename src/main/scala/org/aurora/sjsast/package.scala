@@ -6,6 +6,7 @@ export cats.syntax.semigroup._ // for |+|
 export org.aurora.sjsast.ShowAurora.given
 export cats.syntax.show._ 
 
+type CIO = Clinical|Issues|Orders
  
 trait SjsNode :
   val name:String

@@ -1,6 +1,6 @@
 package org.aurora.sjsast
 
-type CIO = Clinical|Issues|Orders
+
 
 case class PCM(cio:Map[String,CIO]) //extends SjsNode :  
   // override val name = "PCM"
