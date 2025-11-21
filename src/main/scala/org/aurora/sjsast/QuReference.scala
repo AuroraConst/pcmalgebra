@@ -4,9 +4,9 @@ package org.aurora.sjsast
 case class QuReference (qu:String,name:String) extends SjsNode { 
 
   def merge(qref:QuReference) : QuReference = 
-    val q = qu + qref.qu
+    val q = qu |+| qref.qu
     QuReference(q,name)
-  override def merge(p: SjsNode): SjsNode = merge(p)
+  override def merge(p: SjsNode): SjsNode = merge(p.asInstanceOf[QuReference])
 
 } 
 
