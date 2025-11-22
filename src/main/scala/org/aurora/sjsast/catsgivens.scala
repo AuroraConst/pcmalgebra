@@ -12,46 +12,32 @@ object catsgivens :
       else x |+| y
   }
 
-  //TODO NOT SURE ABOUT LIST as there can be duplicate elements
-  given [T] :  BoundedSemilattice[List[T]] = new BoundedSemilattice[List[T]] {
-    def empty: List[T] = List.empty
-    def combine (x: List[T], y:List[T]) :  List[T] =
-      if(x == empty) y
-       else if (y==empty) x
-       else x ++ y
-  }  
 
-  given [T <: SjsNode] : BoundedSemilattice[Set[T]] = new BoundedSemilattice[Set[T]] {
+  given [T]:BoundedSemilattice[Set[T]] = new BoundedSemilattice[Set[T]] :
     def empty: Set[T] = Set.empty
     def combine (x: Set[T], y:Set[T]) :  Set[T] =
+      x union y
+  
+
+  given BoundedSemilattice[Map[String,CIO]] = new BoundedSemilattice[Map[String,CIO]] {
+    def empty: Map[String,CIO] = Map.empty
+    def combine (x: Map[String,CIO], y:Map[String,CIO]) :  Map[String,CIO] =
       if(x == empty) y
        else if (y==empty) x
-       else (x.asMap |+| y.asMap).map{(k,v) => v.asInstanceOf[T]}.toSet
-  }     
+       else {
+        val keys = x.keySet union y.keySet
 
-
-  given [T <: SjsNode] : BoundedSemilattice[Map[String,T]] = new BoundedSemilattice[Map[String,T]] {
-    def empty: Map[String,T] = Map.empty
-    def combine (x: Map[String,T], y:Map[String,T]) :  Map[String,T] =
-      if(x == empty) y
-        else if (y==empty) x
-        else {
-          val keys = x.keySet union y.keySet
-
-          val result = keys.map{k => 
-            (x.get(k),y.get(k)) match {
-              case (Some(x),Some(y)) => k -> x.merge(y).asInstanceOf[T]
-              case (Some(x),None) =>    k -> x
-              case (None,Some(y)) =>    k -> y
-              case (None,None)    =>    ???//k -> SjsAst.InvalidSjsNode().merge[T](SjsAst.InvalidSjsNode())
-            }
-          }.toMap    
-          result
+        val result = keys.map{k => 
+          (x.get(k),y.get(k)) match {
+            case (Some(x:CIO),Some(y:CIO)) => k -> ( x |+| y )
+            case _ => ???
+          }
+        }.toMap    
+        result
       }
   }
 
   
-
 
   given BoundedSemilattice[PCM] =  new BoundedSemilattice[PCM] {
     def empty: PCM = PCM(Map.empty)
@@ -68,6 +54,36 @@ object catsgivens :
       if(x == empty) y
        else if (y==empty) x
        else Issues( x.ics |+| y.ics, x.narrative |+| y.narrative) 
+  }
+
+
+  given BoundedSemilattice[Orders] =  new BoundedSemilattice[Orders] {
+    def empty: Orders = Orders(Set.empty,Set.empty)
+    def combine (x: Orders, y:Orders) :  Orders =
+      if(x == empty) y
+       else if (y==empty) x
+       else Orders( x.ngo |+| y.ngo, x.narrative |+| y.narrative) 
+  }
+
+
+  given BoundedSemilattice[Clinical] =  new BoundedSemilattice[Clinical] {
+    def empty: Clinical = Clinical(Set.empty,Set.empty)
+    def combine (x: Clinical, y:Clinical) :  Clinical =
+      if(x == empty) y
+       else if (y==empty) x
+       else Clinical( x.ngc |+| y.ngc, x.narrative |+| y.narrative) 
+  }
+
+
+  given BoundedSemilattice[CIO] =  new BoundedSemilattice[CIO] {
+    def empty: CIO = Issues(Set.empty,Set.empty)
+    def combine (x: CIO, y:CIO) :  CIO =
+      (x,y) match {
+        case (i1:Issues, i2:Issues) => i1 |+| i2
+        case (o1:Orders, o2:Orders) => o1 |+| o2
+        case (c1:Clinical, c2:Clinical) => c1 |+| c2
+        case  _ =>  ???
+      }
   }
 
 

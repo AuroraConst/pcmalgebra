@@ -4,14 +4,6 @@ import scala.annotation.targetName
 
 
 case class Module(name:String,cio:Map[String,CIO])
-  // override val name = _name
-
-  //TODO merging modules should be meaningless??
-  // def merge(p:Module):Module = 
-  //   // PCM( cio |+| p.cio) 
-  //   ???
-  // override def merge(p: SjsNode): SjsNode = merge(p.asInstanceOf[Module])
-
 
 object Module :      
   def apply(m:GenAst.Module): Module =

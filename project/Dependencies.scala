@@ -30,7 +30,15 @@ object Dependencies {
 
   val cats = Def.setting {
     Seq(
-       "org.typelevel" %%% "cats-core" % DependencyVersions.cats
+       "org.typelevel" %%% "cats-core" % DependencyVersions.cats,
+        "org.typelevel" %%% "cats-laws" % DependencyVersions.cats % Test,
+      // For property-based testing
+      "org.scalacheck" %% "scalacheck" % DependencyVersions.scalacheck % Test,
+      // The testing framework
+      "org.scalameta" %% "munit" % DependencyVersions.munit % Test,
+      // Discipline connects laws to the test framework
+      "org.typelevel" %% "discipline-munit" % DependencyVersions.discipline_munit % Test
+
     )
   }
 

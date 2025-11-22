@@ -23,7 +23,7 @@ object ShowAurora:
   given Show[Orders] = Show.show{
       (o: Orders) => 
         val result = o.ngo.map{(ngo:NGO) => ngo.show}.mkString(newline)
-        val name = o.name
+        val name = "Orders:"
         s"$name:$newline$result"
     }
   

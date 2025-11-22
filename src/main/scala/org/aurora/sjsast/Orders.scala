@@ -1,13 +1,6 @@
 package org.aurora.sjsast
  
-case class Orders(ngo:Set[NGO], narrative:Set[NL_STATEMENT]=Set.empty)  extends SjsNode :
-  override val name = "Orders"
-
-  def merge(o: Orders): Orders = 
-    val x = combine(ngo,o.ngo)
-    val narratives = narrative |+| o.narrative
-    Orders(x, narratives)
-  override def merge(o:SjsNode):SjsNode = merge(o.asInstanceOf[Orders])
+case class Orders(ngo:Set[NGO], narrative:Set[NL_STATEMENT]=Set.empty)//  extends SjsNode :
 
 object Orders :
   def apply(o:GenAst.Orders)  : Orders = 
