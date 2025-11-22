@@ -1,0 +1,10 @@
+module: moduleA
+
+Issues:
+ia :issueName
+
+Orders:
+NGOA:
+oa(ia)
+NGOB:
+ob(ia)
