@@ -30,7 +30,8 @@ object catsgivens :
         val result = keys.map{k => 
           (x.get(k),y.get(k)) match {
             case (Some(x:CIO),Some(y:CIO)) => k -> ( x |+| y )
-            case _ => ???
+            case (None,Some(y:CIO)) => k -> y
+            case (Some(x:CIO),None) => k -> x
           }
         }.toMap    
         result
