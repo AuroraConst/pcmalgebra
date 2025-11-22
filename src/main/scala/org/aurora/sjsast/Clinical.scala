@@ -2,14 +2,14 @@ package org.aurora.sjsast
 
 
 
-case class Clinical(ngc:Set[NGC], narrative:Set[NL_STATEMENT]=Set.empty) extends SjsNode :
-  override val name = "Clinical" 
+case class Clinical(ngc:Set[NGC], narrative:Set[NL_STATEMENT]=Set.empty) // extends SjsNode :
+  // override val name = "Clinical" 
 
-  def merge(c: Clinical): Clinical =
-    val narratives = narrative |+| c.narrative
-    Clinical(ngc merge c.ngc, narratives)
-  override def merge(p: SjsNode): SjsNode = 
-    merge(p.asInstanceOf[Clinical])
+  // def merge(c: Clinical): Clinical =
+  //   val narratives = narrative |+| c.narrative
+  //   Clinical(ngc |+| c.ngc, narratives)
+  // override def merge(p: SjsNode): SjsNode = 
+  //   merge(p.asInstanceOf[Clinical])
 
 object Clinical :
   def apply(c: GenAst.Clinical): Clinical = 

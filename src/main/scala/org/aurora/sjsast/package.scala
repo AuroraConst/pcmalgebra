@@ -16,8 +16,8 @@ trait SjsNode :
 extension [T<:SjsNode](s:Set[T]) 
   private def kv(o:T) = o.name -> o
   def asMap:Map[String,SjsNode] =  s.map{kv}.toMap
-  def merge(s1:Set[T]):Set [T] =
-    combine(s,s1)
+  // def merge(s1:Set[T]):Set [T] =
+  //   combine(s,s1)
 
 
   
