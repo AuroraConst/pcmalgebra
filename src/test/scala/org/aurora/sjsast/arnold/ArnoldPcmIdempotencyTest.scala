@@ -20,10 +20,9 @@ class ArnoldPcmIdempotencyTest extends BaseAsyncTest:
     "PCM" in { 
       for {
         pcm0      <- parse(0).map{PCM(_)}
-        pcm1      <- parse(1).map{PCM(_)}   //"blank pcm"
-        result    <- Future(pcm0 |+| pcm1)
-        assertion <- result should be(pcm0)
-      } yield assertion
+        empty_pcm <- parse(1).map{PCM(_)}   //"blank pcm"
+        result    <- Future(pcm0 |+| empty_pcm)
+      } yield result should be(pcm0)
     } 
   }
 

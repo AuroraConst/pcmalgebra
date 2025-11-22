@@ -24,7 +24,5 @@ object Module :
 
       }.toMap
 
-  def toPcm(icoordinatename:String):  PCM = ???    
-  // replace cross reference names, also add implicit cross references
 
  

@@ -2,14 +2,7 @@ package org.aurora.sjsast
 
 
 
-case class PCM(cio:Map[String,CIO]) //extends SjsNode :  
-  // override val name = "PCM"
-
-  // def merge(p:PCM):PCM = 
-  //   PCM( cio |+| p.cio) 
-
-  // override def merge(p: SjsNode): SjsNode = merge(p.asInstanceOf[PCM])
-
+case class PCM(cio:Map[String,CIO]) 
 
 object PCM :      
 
