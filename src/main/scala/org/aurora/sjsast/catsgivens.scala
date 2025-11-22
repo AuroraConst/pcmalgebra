@@ -19,7 +19,7 @@ object catsgivens :
       x union y
   
 
-  given BoundedSemilattice[Map[String,CIO]] = new BoundedSemilattice[Map[String,CIO]] {
+  given [T]:BoundedSemilattice[Map[String,CIO]] = new BoundedSemilattice[Map[String,CIO]] {
     def empty: Map[String,CIO] = Map.empty
     def combine (x: Map[String,CIO], y:Map[String,CIO]) :  Map[String,CIO] =
       if(x == empty) y
@@ -32,6 +32,7 @@ object catsgivens :
             case (Some(x:CIO),Some(y:CIO)) => k -> ( x |+| y )
             case (None,Some(y:CIO)) => k -> y
             case (Some(x:CIO),None) => k -> x
+            case (None,None) =>  throw Exception("This should not happen")
           }
         }.toMap    
         result
