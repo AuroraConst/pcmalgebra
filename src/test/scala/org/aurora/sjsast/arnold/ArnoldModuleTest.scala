@@ -10,9 +10,6 @@ class ArnoldModuleTest extends BaseAsyncTest:
       for {
         astPCM      <- parse(0)
         modulePCM   <- Future(ModulePCM(astPCM))
-        assertName  <- modulePCM.module.name should be("moduleA")
-        tf           <- true should be(true)
-        // _           <- finfo(s"${modulePCM.show}")
-      } yield tf
+      } yield modulePCM.module.name should be("moduleA")
     } 
   }
