@@ -31,9 +31,10 @@ object Dependencies {
 
   val cats = Def.setting {
     Seq(
-       "org.typelevel" %%% "cats-core" % DependencyVersions.cats,
+        "org.typelevel" %%% "cats-core" % DependencyVersions.cats,
         "org.typelevel" %%% "cats-laws" % DependencyVersions.cats % Test,
-
+        // https://mvnrepository.com/artifact/org.typelevel/discipline-core
+        "org.typelevel" %%% "discipline-core" % DependencyVersions.cats_discipline_core % Test
     )
   }
 

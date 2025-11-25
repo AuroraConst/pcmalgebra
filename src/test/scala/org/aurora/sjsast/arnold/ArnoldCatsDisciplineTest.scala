@@ -20,3 +20,12 @@ import org.typelevel.discipline.scalatest.FunSuiteDiscipline
 class TruthSuite extends AnyFunSuite with FunSuiteDiscipline with Checkers {
   checkAll("Truth", TruthLaws.truth)
 }
+
+
+
+// import cats.laws.discipline.
+
+// // In your test suite (assuming you have the `right Arbitrary and Eq instances)
+// class ArnoldCatsDisciplineTest extends AnyFunSuite with FunSuiteDiscipline  with Checkers {
+//   checkAll("MyType.BoundedSemiLattice", BoundedSemiLatticeTests[MyType].boundedSemiLattice)
+// }
