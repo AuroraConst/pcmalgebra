@@ -1,0 +1,11 @@
+module: a_candidate
+
+Issues:
+a : a_issue
+
+Orders:
+Investigations:
+  a1 (a) ?? note_a1;
+
+Treatment:
+  b1 (a) !! step_b1;
