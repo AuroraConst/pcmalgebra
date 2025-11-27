@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // 1) Run main app bundle under Node (no browser)
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Run Scala.js via Node",
+      "program": "${workspaceFolder}/target/scala-3.3.6/pcmalgebra-fastopt/main.js",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceFolder}/target/scala-3.3.6/pcmalgebra-fastopt/**/*.js"
+      ]
+    },
+    {
+      // 2) Debug the browser app on :8080
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Debug Scala.js in Chrome",
+      "url": "http://localhost:8080/index-dev.html",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true
+    },
+    {
+      // 3) Run *tests* bundle under Node (this is what you want now)
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Run Scala.js TESTS via Node",
+      "program": "${workspaceFolder}/target/scala-3.3.6/pcmalgebra-test-fastopt/main.js",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceFolder}/target/scala-3.3.6/pcmalgebra-test-fastopt/**/*.js"
+      ]
+    }
+  ]
+}
