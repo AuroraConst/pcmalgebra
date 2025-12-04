@@ -49,4 +49,4 @@ lazy val pcmalgebra = project.in(file("."))
     // ignore node library because scalablytyped cannot handle this
     stIgnore += "node",
     stIgnore += "typescript"
-  ) d
+  ) d  ) 
