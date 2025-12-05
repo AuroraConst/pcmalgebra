@@ -1,0 +1,11 @@
+repo,repo_url,sha,author_name,author_email,author_date,summary,body
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,8bdbf3fc48b1f299694f7e0ca6716b66f813422e,saki-aurora,skaushi1@lakeheadu.ca,2025-12-01 09:28:51 -0500,Add Diff,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,2ed0553c6b1c97d036f9160a5cfbb19613153067,saki-aurora,skaushi1@lakeheadu.ca,2025-11-27 08:16:46 -0500,add debugger scaffolding environment,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,c9efe0d9b72d3399409709e2d2a5f2c384083726,saki-aurora,skaushi1@lakeheadu.ca,2025-11-26 10:44:57 -0500,add policy based validation test for PCM,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,168974bb0e9483af6cbc08aa64e5df03e22a8653,saki-aurora,skaushi1@lakeheadu.ca,2025-11-20 11:29:41 -0500,scaffolding for PCM+PCM implementation,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,84d94fba67242bb0f65ae449b9b2896ad2f94ee2,saki-aurora,skaushi1@lakeheadu.ca,2025-11-20 11:08:14 -0500,comments,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,c688a4cb22c44d9a340635eb1cd327c7bd37b533,saki-aurora,skaushi1@lakeheadu.ca,2025-11-20 08:29:24 -0500,WIP on test_module_parsing: 39cc555 Test Module Parsing,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,14d385ab0f7fbcae191d99218ac0b8751f9c6891,saki-aurora,skaushi1@lakeheadu.ca,2025-11-20 08:29:24 -0500,index on test_module_parsing: 39cc555 Test Module Parsing,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,39cc555d5208451d5b72fd11c1b12e581c031262,saki-aurora,skaushi1@lakeheadu.ca,2025-11-13 11:11:07 -0500,Test Module Parsing,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,d6178181d629ed0810126cd658a0f1acee282907,saki-aurora,skaushi1@lakeheadu.ca,2025-11-13 10:41:41 -0500,Test Module Parsing,
+AuroraConst/pcmalgebra,https://github.com/AuroraConst/pcmalgebra,a94c491f97f4fff624873dd1fc3b1bc3dac02440,saki-aurora,skaushi1@lakeheadu.ca,2025-10-22 10:15:34 -0400,add tests setupj,

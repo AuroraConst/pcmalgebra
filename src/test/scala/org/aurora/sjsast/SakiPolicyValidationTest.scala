@@ -1,6 +1,7 @@
 package org.aurora.sjsast
 import scala.concurrent.Future
 import scala.scalajs.js.Thenable.Implicits.*
+import org.aurora.sjsast.Diff.{DiffNode, Presence}
 
 /**
   * policy  based validation test
@@ -28,7 +29,7 @@ class SakiPolicyValidationTest extends BaseAsyncTest:
         candidateAst <- fileutils.parse(candidatePath).toFuture
         policyPcm     = PCM(policyAst)
         candidatePcm  = PCM(candidateAst)
-        missing        = missingCoordinates(policyPcm, candidatePcm, "a")
+        missing        = missingCoordinatesViaDiff(policyPcm, candidatePcm, "a")
         suggestions    = suggestFromPolicy(policyPcm, missing, "a")
         _             <- finfo(s"Missing for issue 'a': ${missing.mkString(", ")}")
         _             <- finfo(s"Suggested additions: ${suggestions.mkString(", ")}")
@@ -62,6 +63,23 @@ class SakiPolicyValidationTest extends BaseAsyncTest:
         }
       }
       .getOrElse(Set.empty)
+
+  /**
+   * Diff-based detection for order coordinates that exist in the policy but
+   * not the candidate for a given issue.
+   */
+  def missingCoordinatesViaDiff(policySpec: PCM, candidate: PCM, issue: String): Set[String] =
+    val diffTree = PCM.diff(policySpec, candidate)
+    collectMissing(diffTree, issue)
+
+  private def collectMissing(node: DiffNode[_], issue: String): Set[String] =
+    val here = node match
+      case DiffNode(_, Some(oc: OrderCoordinate), None, Presence.LeftOnly, _) if oc.refs.refs.exists(_.name == issue) =>
+        Set(oc.name)
+      case _ => Set.empty
+
+    val childrenHits = node.children.flatMap(ch => collectMissing(ch, issue)).toSet
+    here ++ childrenHits
 
 
   /**

@@ -53,6 +53,12 @@ object PCM :
   def apply(p:GenAst.PCM) :PCM = 
     p.module.toOption.fold{PCM(cioFromModuleOrElse(p))}{m => PCM(Module(m))}
 
+  /**
+    * Compute a structured diff between two PCMs.
+    */
+  def diff(left: PCM, right: PCM): Diff.DiffNode[PCM] =
+    Diff.diff(left, right)
+
 
   def f = ???
   /**
