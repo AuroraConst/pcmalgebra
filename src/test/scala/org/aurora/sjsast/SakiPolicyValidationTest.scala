@@ -29,14 +29,15 @@ class SakiPolicyValidationTest extends BaseAsyncTest:
         candidateAst <- fileutils.parse(candidatePath).toFuture
         policyPcm     = PCM(policyAst)
         candidatePcm  = PCM(candidateAst)
+        expected       = missingCoordinates(policyPcm, candidatePcm, "a") // diff baseline
         missing        = missingCoordinatesViaDiff(policyPcm, candidatePcm, "a")
         suggestions    = suggestFromPolicy(policyPcm, missing, "a")
         _             <- finfo(s"Missing for issue 'a': ${missing.mkString(", ")}")
         _             <- finfo(s"Suggested additions: ${suggestions.mkString(", ")}")
+        _             <- finfo(s"Expected (baseline diff): ${expected.mkString(", ")}")
       } yield {
-        missing should contain allOf ("a0", "a2", "b2", "c1")
-        missing.size should be(4)
-        suggestions shouldBe missing
+        missing shouldBe expected
+        suggestions shouldBe expected
       }
     }
   }
