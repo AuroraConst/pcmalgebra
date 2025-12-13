@@ -14,5 +14,6 @@ object DependencyVersions {
   val betterfiles         = "3.9.2"
   val scalatest           = "3.2.19"
   val scalatestdiscipline = "2.3.0"
+  val magnolia            = "1.3.18"
 
 }

@@ -42,6 +42,7 @@ lazy val pcmalgebra = project.in(file("."))
     libraryDependencies ++= Dependencies.scalatest.value,
     libraryDependencies +="org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.1",
     libraryDependencies ++= Dependencies.cats.value,
+    libraryDependencies ++= Dependencies.magnolia.value,
 
     // Tell ScalablyTyped that we manage `npm install` ourselves
     externalNpm := baseDirectory.value,
