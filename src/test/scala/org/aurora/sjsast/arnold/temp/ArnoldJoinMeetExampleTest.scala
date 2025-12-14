@@ -74,7 +74,7 @@ class ArnoldJoinMeetExampleTest extends BaseAsyncTest:
   "case class within case class" should {
     "look like this" in { 
       sealed trait MeetJoinAble
-      case class A(a:Set[Int]) extends MeetJoinAble
+      case class A(a:Set[Int]) //not extending MeetJoinAble fits with being B being a top level case class like B is where we intend to do top level join/meet operations
       case class B(b:Set[A]) extends MeetJoinAble
 
       val a1 = A(Set(10))
@@ -89,10 +89,6 @@ class ArnoldJoinMeetExampleTest extends BaseAsyncTest:
       val b13 = B(Set(a1,a3))
       val b23 = B(Set(a2,a3))
       val b123 = B(Set(a1,a2,a3))
-
-
-
-
 
       //narrowing acceptable types for extension
       extension[T<:MeetJoinAble](a:T)
