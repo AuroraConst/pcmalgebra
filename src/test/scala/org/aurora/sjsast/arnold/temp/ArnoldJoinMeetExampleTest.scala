@@ -50,7 +50,7 @@ class ArnoldJoinMeetExampleTest extends BaseAsyncTest:
       case class A(a:Set[Int]) extends MeetJoinAble
 
       val a1 = A(Set(10))
-      val a2 = A(Set(20))  
+      val a2 = A(Set(20))    
       val a3 = A(Set(30))
 
       //narrowing acceptable types for extension
@@ -70,5 +70,52 @@ class ArnoldJoinMeetExampleTest extends BaseAsyncTest:
       a1.leftOnly( a2.join(a3) ) should be (a1)
     } 
   }
+
+  "case class within case class" should {
+    "look like this" in { 
+      sealed trait MeetJoinAble
+      case class A(a:Set[Int]) extends MeetJoinAble
+      case class B(b:Set[A]) extends MeetJoinAble
+
+      val a1 = A(Set(10))
+      val a2 = A(Set(20))    
+      val a3 = A(Set(30))
+
+      val b1 = B(Set(a1))
+      val b2 = B(Set(a2))
+      val b3 = B(Set(a3))
+
+      val b12 = B(Set(a1,a2))
+      val b13 = B(Set(a1,a3))
+      val b23 = B(Set(a2,a3))
+      val b123 = B(Set(a1,a2,a3))
+
+
+
+
+
+      //narrowing acceptable types for extension
+      extension[T<:MeetJoinAble](a:T)
+        def join(b:T)(using je:JoinMeetExample[T]):T= je.join(a,b)
+        def meet(b:T)(using je:JoinMeetExample[T]):T= je.meet(a,b)
+        def leftOnly(b:T)(using je:JoinMeetExample[T]):T= je.leftOnly(a,b)
+
+      b1.join(b12) should be (b12) //join
+
+      b12.join(b1) should be (b12) //join communative
+
+      b1.join(b2) should be (B(Set(a1,a2))) //join
+
+      b1.join(b1) should be (b1) //idempotency
+
+
+      val allJoined =  (b1.join(b2).join(b3)) 
+      b1.meet( allJoined ) should be (b1) //meet
+
+
+      // a1.leftOnly( a2.join(a3) ) should be (a1)
+    } 
+  }
+
 
 
