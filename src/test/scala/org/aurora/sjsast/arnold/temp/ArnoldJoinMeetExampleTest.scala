@@ -112,8 +112,9 @@ class ArnoldJoinMeetExampleTest extends BaseAsyncTest:
       val allJoined =  (b1.join(b2).join(b3)) 
       b1.meet( allJoined ) should be (b1) //meet
 
+      b1.leftOnly( b2.join(b3) ) should be (b1)
 
-      // a1.leftOnly( a2.join(a3) ) should be (a1)
+
     } 
   }
 
