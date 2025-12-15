@@ -1,6 +1,9 @@
 package org.aurora.sjsast
 
+//TODO I think this is a better IR than using Map[String,Set[CIO]]
+// case class PCM(c:Set[Clinical], o:Set[Orders], i:Set[Issues])
 
+// Map[String,Set[CIO]]
 
 case class PCM(cio:Map[String,CIO]) 
 

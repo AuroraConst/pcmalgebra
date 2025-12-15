@@ -54,10 +54,11 @@ class ArnoldJoinMeetExampleTest extends BaseAsyncTest:
       val a3 = A(Set(30))
 
       //narrowing acceptable types for extension
-      extension[T<:MeetJoinAble](a:T)
+      extension[T ](a:T)
         def join(b:T)(using je:JoinMeetExample[T]):T= je.join(a,b)
         def meet(b:T)(using je:JoinMeetExample[T]):T= je.meet(a,b)
         def leftOnly(b:T)(using je:JoinMeetExample[T]):T= je.leftOnly(a,b)
+
 
       a1.join(a2) should be (A(Set(10,20))) //join
       a1.join(a2) should be(a2.join(a1))  //communativity
