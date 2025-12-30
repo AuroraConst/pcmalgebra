@@ -97,6 +97,8 @@ class ArnoldJoinMeetExampleTest extends BaseAsyncTest:
         def meet(b:T)(using je:JoinMeetExample[T]):T= je.meet(a,b)
         def leftOnly(b:T)(using je:JoinMeetExample[T]):T= je.leftOnly(a,b)
 
+      "a1.join(a2)" shouldNot compile //because A does not extend MeetJoinAble
+
       b1.join(b12) should be (b12) //join
 
       b12.join(b1) should be (b12) //join communative
