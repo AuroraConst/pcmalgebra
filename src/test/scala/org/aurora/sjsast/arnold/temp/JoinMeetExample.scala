@@ -33,7 +33,7 @@ object JoinMeetExample extends AutoDerivation[JoinMeetExample]:
 
     def meet(left: T, right: T): T = 
       ctx.choose(left) { sub =>
-        sub.typeclass.join(sub.value, sub.cast(right))
+        sub.typeclass.meet(sub.value, sub.cast(right))
       }
 
     def leftOnly(left:T, right:T):T =  ctx.choose(left) { sub =>
