@@ -7,7 +7,7 @@ trait JoinMeetExample[T]:
   def join(left: T, right: T): T
   def meet(left: T, right: T): T
   def leftOnly(left:T, right:T):T 
-
+ 
 
 object JoinMeetExample extends AutoDerivation[JoinMeetExample]:
   def join[T](ctx: CaseClass[JoinMeetExample, T]): JoinMeetExample[T] =  new JoinMeetExample[T] {

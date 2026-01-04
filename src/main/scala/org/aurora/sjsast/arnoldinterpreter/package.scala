@@ -33,3 +33,7 @@ sealed trait Value
 case class IntValue(value: Int) extends Value
 case class BoolValue(value: Boolean) extends Value
 
+//TODO preparing to return PCM coordinate as a String.  
+import org.aurora.sjsast.CIO
+case class PCMCoordinate(coordinate:String) extends Value
+
